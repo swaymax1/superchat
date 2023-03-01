@@ -1,0 +1,89 @@
+body {
+  font-family: sans-serif;
+  background-image: url("../background.jpg");
+  background-size: cover;
+
+}
+
+#container {
+  display: flex;
+  flex-direction: column;
+  background-color: rgba(255, 255, 255, 0.7);
+  position: absolute;
+  top: 5%;
+  left: 20%;
+  height: 90%;
+  width: 55%;
+}
+
+
+#message_form {
+  position: relative;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  display: flex;
+  flex: 1;
+  justify-content: space-between;
+}
+
+#message_submit {
+  width: 10%;
+  background-color: #428BCA;
+  border: none;
+}
+
+#message_submit:hover {
+  background-color: #275b96;
+}
+
+
+#message_field {
+  flex: 1;
+  background-color: rgb(27, 27, 30);
+  border: none;
+  outline: none;
+  font-size: 1.1em;
+  color: rgb(182, 178, 178);
+  padding: 1.5%;
+}
+
+#message_field:focus {
+  background-color: rgb(35, 30, 43);
+}
+
+
+
+#messages_container {
+  height: 90%;
+  padding: 1.5%;
+  display: flex;
+  flex-direction: column;
+  overflow-y: auto;
+}
+
+.message {
+  position: relative;
+  margin: 10px 0px;
+  padding: 10px;
+  max-width: 50%;
+  display: block;
+  word-wrap: break-word;
+  line-height: 1.5em;
+  border-top-left-radius: 10px;
+  border-top-right-radius: 10px;
+}
+
+.mine {
+  background-color: green;
+  border-bottom-left-radius: 10px;
+  border-bottom-right-radius: 0px;
+  align-self: flex-end;
+}
+
+.theirs {
+  background-color: grey;
+  border-bottom-left-radius: 0px;
+  border-bottom-right-radius: 10px;
+  align-self: flex-start;
+}
