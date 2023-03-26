@@ -3,6 +3,7 @@ body {
     user-select: none;
     margin: 0;
     font-family: sans-serif;
+    overflow: hidden;
 }
 
 
@@ -79,48 +80,25 @@ body {
     padding: 3%;
 }
 
-#add-user {
+#logout {
     position: absolute;
-    left: 40%;
-    bottom: 0%;
-    height: 10%;
-    width: 40%;
-    border: 1px solid white;
+    left: 90%;
+    top: 2%;
+    border-radius: 3px;
+    background-color: rgb(230, 15, 15);
+    padding: 5px;
+    font-size: 1.4em;
+    height: 5%;
+    width: 7%;
     display: flex;
-    flex-direction: row;
-    outline: none;
+    align-items: center;
+    justify-content: center;
 }
 
-#add-user-field {
-    width: 70%;
-    height: 100%;
-    border: none;
-    outline: none;
-    padding: 2%;
-    box-sizing: border-box;
-    font-size: 1.3em;
-    font-family: inherit;
+#logout:hover {
+    background-color: rgb(150, 15, 15);
 }
 
-#add-user-field:focus {
-    background-color: rgb(40, 40, 40);
-}
-
-#add-user-submit {
-    flex: 1;
-    background-color: green;
-    outline: none;
-    border: none;
-}
-
-#add-user-submit:hover {
-    background-color: rgb(5, 90, 5);
-}
-
-#add-user-error-message {
-    color: crimson;
-    font-size: 1.6em;
-    position: absolute;
-    left: 41%;
-    bottom: 11%;
+#logout:active {
+    background-color: rgb(120, 15, 15);
 }

@@ -38,7 +38,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 $_SESSION['email'] = $email;
                 $_SESSION['wrong_credentials'] = false;
                 $_SESSION['loggedIn'] = true;
-                header("Location: ../chat.php");
+                header("Location: ../chats.php");
             } else {
                 $_SESSION['loggedIn'] = false;
                 header("Location: ../register.php?message=error&$data");

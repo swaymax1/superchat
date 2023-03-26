@@ -5,8 +5,6 @@ require_once("server.php");
 $salt1 = 'qm(2h*';
 $salt2 = 'pg!r,';
 
-
-
 function sanitizeString($string)
 {
     return stripslashes(htmlentities(strip_tags($string)));
@@ -126,6 +124,22 @@ function getChats($server, $username)
     return $data;
 }
 
+function getUsers($server)
+{
+    $query = "SELECT username FROM users";
+    $stmt = mysqli_prepare($server, $query);
+    mysqli_stmt_execute($stmt);
+    if (mysqli_stmt_errno($stmt)) {
+        return "error";
+    }
+    $usernames = array();
+    $result = mysqli_stmt_get_result($stmt);
+    while ($row = mysqli_fetch_row($result)) {
+        $usernames[] = $row[0];
+    }
+    return $usernames;
+}
+
 function saveMessage($server, $chatId, $sender, $message)
 {
     $query = "INSERT INTO messages(chat_id, sender_id, content) VALUES(?,?,?)";
@@ -234,7 +248,8 @@ function checkRoom($server, $user1, $user2)
     return mysqli_fetch_assoc($result);
 }
 
-function getUnreadMessages($server, $username, $chatId) {
+function getUnreadMessages($server, $username, $chatId)
+{
     $query = "SELECT COUNT(*) as count FROM messages WHERE chat_id = ? AND id NOT IN (SELECT message_id FROM seen_messages WHERE username = ? AND chat_id = ?)";
     $stmt = mysqli_prepare($server, $query);
     mysqli_stmt_bind_param($stmt, "iss", $chatId, $username, $chatId);
@@ -246,4 +261,3 @@ function getUnreadMessages($server, $username, $chatId) {
     $data = mysqli_fetch_assoc($result);
     return $data['count'];
 }
-

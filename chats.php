@@ -11,6 +11,7 @@ if (!isset($_SESSION['loggedIn']) || !$_SESSION['loggedIn']) {
 
 // chats is a 2d array of username and chat id
 $chats = getChats($server, $_SESSION['username']);
+$usernames = getUsers($server);
 
 ?>
 
@@ -22,6 +23,8 @@ $chats = getChats($server, $_SESSION['username']);
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link href="./styles/chats-list.css" rel="stylesheet">
+    <link href="./styles/add-user.css" rel="stylesheet">
+    <link href="./styles/users-list.css" rel="stylesheet">
     <title>Chats</title>
 </head>
 
@@ -43,19 +46,32 @@ $chats = getChats($server, $_SESSION['username']);
                         </div>
                     </div>
                     <!-- header -->
-                    <div class="unseen-messages" style="visibility: hidden;"
-                        id="<?php echo $chat['chatId'] . '-unseen' ?>">
+                    <div class="unseen-messages" style="visibility: hidden;" id="<?php echo $chat['chatId'] . '-unseen' ?>">
                         <?php echo $chat['unseen_messages'] ?>
                     </div>
                 </div>
             </div>
         <?php } ?>
     </div>
-    <div id="add-user-error-message"></div>
-    <div id="add-user">
-        <input type="text" id="add-user-field" autocomplete="off" placeholder="Add a user">
-        <input type="submit" id="add-user-submit" value="Start chat">
+    <div id="logout">Logout</div>
+    <div id="error-message"></div>
+    <div class="users-container">
+        <div class="header">
+            <div style="position: relative; left: 100px">Users</div>
+        </div>
+        <ul class="users-list">
+            <?php foreach ($usernames as $username) {
+                if ($username == $_SESSION['username'])
+                    continue;
+                echo "<li style='margin-bottom: 10px'>$username</li>";
+            } ?>
+        </ul>
+        <div id="add-user">
+            <input type="text" id="add-user-field" autocomplete="off" placeholder="Add a user">
+            <input type="submit" id="add-user-submit" value="Start chat">
+        </div>
     </div>
+
     <script src="./js/chats.js"></script>
 </body>
 

@@ -1,0 +1,16 @@
+
+.users-container {
+    display: flex;
+    flex-direction: column;
+    background-color: rgb(35, 35, 35);
+    position: absolute;
+    right: 0%;
+    bottom: 0%;
+    outline: none;
+    width: 20%;
+    height: 50%;
+}
+
+.users-list {
+    overflow-y: scroll;
+}

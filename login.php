@@ -13,7 +13,6 @@ if (isset($_SESSION['wrong_credentials']) && $_SESSION['wrong_credentials'] == t
     destroySession();
 }
 
-
 ?>
 
 
@@ -30,8 +29,10 @@ if (isset($_SESSION['wrong_credentials']) && $_SESSION['wrong_credentials'] == t
 
 <body>
     <form class="form" method="post" action="./php/login.inc.php" id="form">
+
         <div class="container" id="login">
-            <h1 class="form__title">Login</h1>
+            <h1 style="position:relative;left:30%;color:lightgreen">Superchat</h1>
+            <h2 class="form__title">Login</h2>
             <div class="form__message form__message-error" id="form-message">
                 <?php echo $message; ?>
             </div>

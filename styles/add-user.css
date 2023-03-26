@@ -1,0 +1,40 @@
+#add-user {
+    height: 15%;
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    outline: none;
+    position: absolute;
+    left: 0;
+    bottom: 0;
+}
+
+#add-user-field {
+    width: 70%;
+    height: 100%;
+    border: none;
+    outline: none;
+    padding: 2%;
+    box-sizing: border-box;
+    font-size: 1.1em;
+    font-family: inherit;
+}
+
+#add-user-submit {
+    flex: 1;
+    background-color: green;
+    outline: none;
+    border: none;
+}
+
+#add-user-submit:hover {
+    background-color: rgb(5, 90, 5);
+}
+
+#error-message {
+    color: red;
+    font-size: 1.5em;
+    position: absolute;
+    left: 85%;
+    top: 45%;
+}

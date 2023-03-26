@@ -21,7 +21,7 @@ $_SESSION['chatId'] = $_GET['chatId'];
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Document</title>
-  <link href="styles/chatt.css" rel="stylesheet">
+  <link href="styles/chat.css" rel="stylesheet">
 </head>
 
 <body>
@@ -37,7 +37,7 @@ $_SESSION['chatId'] = $_GET['chatId'];
       <input type="submit" value="SEND" id="message_submit">
     </form>
   </div>
-  <script src="./js/chatt.js"></script>
+  <script src="./js/chat.js"></script>
 </body>
 
 </html>

@@ -28,7 +28,8 @@ if (isset($_SESSION['wrong_credentials']) && $_SESSION['wrong_credentials']) {
 <body>
     <form class="form" id="form" method="post" action="./php/register.inc.php" id="register">
         <div class="container" id="register">
-            <h1 class="form__title">Create Account</h1>
+            <h1 style="position:relative;left:30%;color:lightgreen">Superchat</h1>
+            <h2 class="form__title">Create Account</h2>
             <div class="form__message form__message-error" id="form-message">
                 <?php echo $message ?>
             </div>
@@ -50,7 +51,7 @@ if (isset($_SESSION['wrong_credentials']) && $_SESSION['wrong_credentials']) {
             </div>
             <button type="submit" class="form__button" id="register-submit">Create Account</button>
             <p class="form__text">
-                <a class="form__link" href="login.html" id="loginLink">Already have an account? Login</a>
+                <a class="form__link" href="login.php" id="loginLink">Already have an account? Login</a>
             </p>
             <input type="hidden" name="register">
         </div>

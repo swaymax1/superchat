@@ -1,8 +1,9 @@
 const chatList = O("chats-list");
 const addUserSubmit = O("add-user-submit");
 const addUserField = O("add-user-field");
-const errorMessage = O("add-user-error-message");
+const errorMessage = O("error-message");
 const user1 = O("username-div").value;
+const logout = O("logout");
 
 
 for (let chat of chatList.childNodes) {
@@ -15,7 +16,12 @@ for (let chat of chatList.childNodes) {
 
 
 addUserSubmit.addEventListener("click", addUser);
-
+logout.addEventListener("click", () => {
+    fetch("./php/logout.php").then((_) => {
+        window.location.href = 'login.php';
+    });
+});
+setInterval(updateUnseenCount, 2000);
 
 async function addUser() {
 
@@ -27,20 +33,15 @@ async function addUser() {
             method: "GET",
         });
         const data = await response.json();
-        if (!data.success) {
-            errorMessage.innerText = data.message;
-            return;
+        if (data.success) {
+            window.location.href = `chat.php?chatId=${data.id}&user2=${user2}`;
         }
         else {
-            window.location.href = "./chat.php?id=" + data.id;
+            errorMessage.innerText = data.message;
         }
     } catch (error) {
-        errorMessage.textContent = error;
+        errorMessage.innerText = "something went wrong";
     }
-}
-
-function O(id) {
-    return document.getElementById(id);
 }
 
 async function getUnseenCount(chatId) {
@@ -75,4 +76,7 @@ function updateUnseenCount() {
     }
 }
 
-setInterval(updateUnseenCount, 2000);
+function O(id) {
+    return document.getElementById(id);
+}
+
