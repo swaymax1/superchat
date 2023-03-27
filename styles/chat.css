@@ -87,3 +87,13 @@ body {
   border-bottom-right-radius: 10px;
   align-self: flex-start;
 }
+
+#username-container {
+  font-size: large;
+  background-color: #428BCA;
+  color: white;
+  height: 7%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}

@@ -26,8 +26,8 @@ setInterval(updateUnseenCount, 2000);
 async function addUser() {
 
     const user2 = addUserField.value;
-    const url = `./php/add_user.php?add_user=1&user1=${encodeURIComponent(user1)}&user2=${encodeURIComponent(user2)}`;
     if (user2 === '') return;
+    const url = `./php/add_user.php?add_user=1&user1=${encodeURIComponent(user1)}&user2=${encodeURIComponent(user2)}`;
     try {
         const response = await fetch(url, {
             method: "GET",

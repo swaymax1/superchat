@@ -30,6 +30,7 @@ $_SESSION['chatId'] = $_GET['chatId'];
   </div>
 
   <div id="container">
+    <div id="username-container"><p><?php echo $_GET['user2'] ?></p></div>
     <div id="messages_container">
     </div>
     <form id="message_form" action="#" method="post" placeholder="Type message here" autocomplete="off">

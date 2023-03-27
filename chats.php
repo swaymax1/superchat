@@ -46,7 +46,9 @@ $usernames = getUsers($server);
                         </div>
                     </div>
                     <!-- header -->
-                    <div class="unseen-messages" style="visibility: hidden;" id="<?php echo $chat['chatId'] . '-unseen' ?>">
+                    <div class="unseen-messages"
+                        style="visibility: <?php echo $chat['unseen_messages'] > 0 ? 'visible' : 'hidden'; ?>"
+                        id="<?php echo $chat['chatId'] . '-unseen' ?>">
                         <?php echo $chat['unseen_messages'] ?>
                     </div>
                 </div>
@@ -63,7 +65,7 @@ $usernames = getUsers($server);
             <?php foreach ($usernames as $username) {
                 if ($username == $_SESSION['username'])
                     continue;
-                echo "<li style='margin-bottom: 10px'>$username</li>";
+                echo "<li style='margin-bottom: 10px;color: white'>$username</li>";
             } ?>
         </ul>
         <div id="add-user">

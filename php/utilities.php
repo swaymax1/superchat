@@ -239,7 +239,7 @@ function echoMessage($success, $params)
 
 function checkRoom($server, $user1, $user2)
 {
-    $query = "select * from chats where username1 = ? and username2 = ? or username2 = ? or username1 = ?";
+    $query = "select * from chats where (username1 = ? and username2 = ?) or (username2 = ? and username1 = ?)";
     $stmt = mysqli_prepare($server, $query);
     mysqli_stmt_bind_param($stmt, "ssss", $user1, $user2, $user1, $user2);
     if (!mysqli_stmt_execute($stmt))

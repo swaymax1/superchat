@@ -16,4 +16,5 @@ if ($_SERVER['REQUEST_METHOD'] === "GET") {
 
     $count = getUnreadMessages($server, $username, $chatId);
     echo json_encode(array("success" => true, "count" => $count));
+    return $count;
 }
