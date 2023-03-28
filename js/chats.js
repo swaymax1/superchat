@@ -1,3 +1,6 @@
+
+
+
 const chatList = O("chats-list");
 const addUserSubmit = O("add-user-submit");
 const addUserField = O("add-user-field");
@@ -42,6 +45,10 @@ async function addUser() {
     } catch (error) {
         errorMessage.innerText = "something went wrong";
     }
+}
+
+function addUser() {
+    
 }
 
 async function getUnseenCount(chatId) {

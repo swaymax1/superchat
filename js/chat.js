@@ -52,7 +52,7 @@ async function uploadMessage(message) {
     lastTimeStamp = Date.now() / 1000;
 
     try {
-        const response = await fetch('./php/chat.inc.php.', {
+        fetch('./php/chat.inc.php.', {
             method: 'POST',
             body: JSON.stringify(info),
             headers: {
@@ -79,10 +79,24 @@ async function getMessages() {
             lastTimeStamp = new Date(lastMessage['created_at']).getTime() / 1000;
         }
     } catch (error) {
-        console.log(error);
+        throw error;
     }
 }
 
+function getMessages() {
+    const params = `chatId=${chatId}&since=${lastTimeStamp}`;
+    fetch("./php/chat.inc.php?" + params, {
+        method: 'GET',
+    })
+        .then((response) => (response.json())
+            .then((data) => {
+                if (data.messages.length > 0) {
+                    setMessages(data.messages);
+                    let lastMessage = data.messages[data.messages.length - 1];
+                    lastTimeStamp = new Date(lastMessage['created_at']).getTime() / 1000;
+                }
+            }));
+}
 
 function setMessages(messages) {
     for (let message of messages) {
@@ -95,6 +109,5 @@ function setMessages(messages) {
 }
 
 function scroll() {
-    console.log(messagesContainer.scrollHeight);
     messagesContainer.scrollTop = messagesContainer.scrollHeight;
 }

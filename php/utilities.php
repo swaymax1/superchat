@@ -231,10 +231,6 @@ function checkLoggedIn($session)
     }
 }
 
-function echoMessage($success, $params)
-{
-    echo json_encode(["success" => $success, ...$params]);
-}
 
 
 function checkRoom($server, $user1, $user2)

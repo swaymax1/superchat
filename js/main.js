@@ -13,7 +13,7 @@ if (registerSubmit) {
 }
 
 
-async function login(event) {
+function login(event) {
     event.preventDefault();
     let username = document.getElementById("username").value;
     let password = document.getElementById("password").value;
@@ -33,7 +33,7 @@ async function login(event) {
 }
 
 
-async function register(event) {
+function register(event) {
     event.preventDefault();
 
     let formMessage = document.getElementById('form-message');

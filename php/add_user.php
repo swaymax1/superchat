@@ -8,21 +8,22 @@ if (isset($_GET['add_user']) && isset($_GET['user1']) && isset($_GET['user2'])) 
     $user2 = sanitizeSql($server, $_GET['user2']);
 
     if ($user1 === $user2 || !checkColumn($server, ["username" => $user2])) {
-        echoMessage(false, array("message" => "user not found"));
+        echo json_encode(["success" => false, "message" => "user not found"]);
         exit();
     }
 
     $room = checkRoom($server, $user1, $user2);
     if ($room === 'error') {
-        echoMessage(false, array("message" => "internal error"));
+        echo json_encode(["success" => false, "message" => "internal error"]);
     } elseif ($room) {
-        echoMessage(true, array("id" => $room['id']));
+        echo json_encode(["success" => true, "id" => $room['id']]);
+
     } else {
         $room_create = createRoom($server, $user1, $user2);
         if ($room_create === "error") {
-            echoMessage(false, ["message" => "internal error"]);
+            echo json_encode(["success" => false, "message" => "internal error"]);
         } else {
-            echoMessage(true, ["id" => $room_create]);
+            echo json_encode(["success" => true, "id" => $room_create]);
         }
     }
 
