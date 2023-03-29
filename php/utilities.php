@@ -144,7 +144,6 @@ function saveMessage($server, $chatId, $sender, $message)
 {
     $query = "INSERT INTO messages(chat_id, sender_id, content) VALUES(?,?,?)";
     $stmt = mysqli_prepare($server, $query);
-
     mysqli_stmt_bind_param($stmt, "iss", $chatId, $sender, $message);
     mysqli_stmt_execute($stmt);
     if (mysqli_stmt_errno($stmt))
@@ -156,12 +155,15 @@ function saveMessage($server, $chatId, $sender, $message)
     } else {
         updateMessageSeenStatus($server, $messageId, $sender, $chatId);
     }
+    $result = mysqli_query($server, "SELECT UNIX_TIMESTAMP(created_at) as timestamp from messages where id = $messageId");
+    $timestamp = mysqli_fetch_assoc($result)['timestamp'];
+    return $timestamp;
 }
 
 function getMessages($server, $chatId, $since, $username)
 {
 
-    $stmt = mysqli_prepare($server, "SELECT * FROM messages WHERE chat_id = ? AND UNIX_TIMESTAMP(created_at) > ? ORDER BY created_at ASC");
+    $stmt = mysqli_prepare($server, "SELECT *,UNIX_TIMESTAMP(created_at) as timestamp FROM messages WHERE chat_id = ? AND UNIX_TIMESTAMP(created_at) > ? ORDER BY created_at ASC");
 
     mysqli_stmt_bind_param($stmt, "ii", $chatId, $since);
 
@@ -221,16 +223,6 @@ function configureLastMessageTime($time)
         return strtoupper($datetime->format('g:i a'));
     }
 }
-
-
-function checkLoggedIn($session)
-{
-    if (!isset($session['loggedIn']) || !$session['loggedIn']) {
-        echo json_encode(array("success" => false, "message" => "user not logged in"));
-        exit();
-    }
-}
-
 
 
 function checkRoom($server, $user1, $user2)

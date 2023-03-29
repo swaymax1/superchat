@@ -47,10 +47,6 @@ async function addUser() {
     }
 }
 
-function addUser() {
-    
-}
-
 async function getUnseenCount(chatId) {
     const url = `./php/get_unread_messages.php?username=${encodeURIComponent(user1)}&chatId=${encodeURIComponent(chatId)}`;
 

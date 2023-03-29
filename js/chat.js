@@ -3,6 +3,8 @@ function O(id) {
     return document.getElementById(id);
 }
 
+let sending = false;
+
 const messageForm = O('message_form');
 const messageInput = O('message_field');
 const messageSubmit = O('message_submit');
@@ -18,13 +20,13 @@ let lastTimeStamp = 0;
 
 getMessages();
 setInterval(getMessages, 2000);
-scroll();
 
 
 messageForm.addEventListener('submit', event => {
     event.preventDefault();
 
     const text = messageInput.value;
+    if (text === '') return;
     const message = createMessage(text, username);
     chatElements.push(message);
     messagesContainer.appendChild(message);
@@ -42,48 +44,31 @@ function createMessage(text, sender) {
     return messageElement;
 }
 
-async function uploadMessage(message) {
+function uploadMessage(message) {
+    if(message === '') return;
     const info = {
         'message_upload': true,
         'chatId': chatId,
         'sender': username,
         'content': message,
     };
-    lastTimeStamp = Date.now() / 1000;
+    sending = true;
+    fetch('./php/chat.inc.php', {
+        method: 'POST',
+        body: JSON.stringify(info),
+        headers: {
+            'Content-Type': 'application/json',
+        },
+    }).then((response) => response.json()).then((data) => {
+        lastTimeStamp = data.timestamp;
+        sending = false;
+    });
 
-    try {
-        fetch('./php/chat.inc.php.', {
-            method: 'POST',
-            body: JSON.stringify(info),
-            headers: {
-                'Content-Type': 'application/json',
-            },
-        });
-
-    } catch (error) {
-        throw error;
-    }
 }
 
-
-async function getMessages() {
-    const params = `chatId=${chatId}&since=${lastTimeStamp}`;
-    try {
-        let response = await fetch("./php/chat.inc.php?" + params, {
-            method: 'GET',
-        });
-        let data = await response.json();
-        if (data.messages.length > 0) {
-            setMessages(data.messages);
-            let lastMessage = data.messages[data.messages.length - 1];
-            lastTimeStamp = new Date(lastMessage['created_at']).getTime() / 1000;
-        }
-    } catch (error) {
-        throw error;
-    }
-}
 
 function getMessages() {
+    if (sending) return;
     const params = `chatId=${chatId}&since=${lastTimeStamp}`;
     fetch("./php/chat.inc.php?" + params, {
         method: 'GET',
@@ -92,8 +77,8 @@ function getMessages() {
             .then((data) => {
                 if (data.messages.length > 0) {
                     setMessages(data.messages);
-                    let lastMessage = data.messages[data.messages.length - 1];
-                    lastTimeStamp = new Date(lastMessage['created_at']).getTime() / 1000;
+                    scroll();
+                    lastTimeStamp = data.messages[data.messages.length - 1]['timestamp'];
                 }
             }));
 }
@@ -101,9 +86,7 @@ function getMessages() {
 function setMessages(messages) {
     for (let message of messages) {
         let element = createMessage(message['content'], message['sender_id']);
-        const shouldScroll = messagesContainer.scrollTop == messagesContainer.scrollHeight;
         chatElements.push(element);
-        if (shouldScroll) scroll();
     }
     messagesContainer.append(...chatElements);
 }
@@ -111,3 +94,4 @@ function setMessages(messages) {
 function scroll() {
     messagesContainer.scrollTop = messagesContainer.scrollHeight;
 }
+

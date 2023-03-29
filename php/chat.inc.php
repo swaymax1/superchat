@@ -15,8 +15,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $chatId = sanitizeSql($server, strval($data['chatId']));
         $content = $data['content'];
 
-        saveMessage($server, $chatId, $sender, $content);
-        echo json_encode(array("success" => true, "message" => "sent successfully"));
+        $timestamp = saveMessage($server, $chatId, $sender, $content);
+        echo json_encode(array("success" => true, "timestamp" => $timestamp));
     } else
         echo json_encode(array("success" => false, "message" => "Invalid request"));
     exit();
