@@ -88,7 +88,7 @@ function destroySession()
 
 function checkLength($string)
 {
-    if (empty($string) || $string < 5)
+    if (empty($string) || strlen($string) < 5)
         return false;
     return true;
 }
@@ -103,7 +103,7 @@ function checkEmail($email)
 
 function getChats($server, $username)
 {
-    $query = "SELECT * FROM chats WHERE username1 = ? or username2 = ?";
+    $query = "SELECT *,UNIX_TIMESTAMP(last_message) as lastMessageTs FROM chats WHERE username1 = ? or username2 = ?";
     $stmt = mysqli_prepare($server, $query);
     mysqli_stmt_bind_param($stmt, "ss", $username, $username);
     mysqli_stmt_execute($stmt);
@@ -116,11 +116,14 @@ function getChats($server, $username)
     while (($row = mysqli_fetch_assoc($result)) != null) {
         $last_message = configureLastMessageTime($row['last_message']);
         if ($row['username1'] === $username) {
-            array_push($data, array("chatId" => $row['id'], "username" => $row['username2'], "last_message" => $last_message, "unseen_messages" => getUnreadMessages($server, $username, $row['id'])));
+            array_push($data, array("chatId" => $row['id'], "username" => $row['username2'], "last_message" => $last_message, "lastMessageTs" => $row['lastMessageTs'], "unseen_messages" => getUnreadMessages($server, $username, $row['id'])));
         } elseif ($row['username2'] === $username) {
-            array_push($data, array("chatId" => $row['id'], "username" => $row['username1'], "last_message" => $last_message, "unseen_messages" => getUnreadMessages($server, $username, $row['id'])));
+            array_push($data, array("chatId" => $row['id'], "username" => $row['username1'], "last_message" => $last_message, "lastMessageTs" => $row['lastMessageTs'], "unseen_messages" => getUnreadMessages($server, $username, $row['id'])));
         }
     }
+    usort($data, function($a, $b) {
+        return $b['lastMessageTs'] <=> $a['lastMessageTs'];
+    });
     return $data;
 }
 
@@ -248,4 +251,8 @@ function getUnreadMessages($server, $username, $chatId)
     $result = mysqli_stmt_get_result($stmt);
     $data = mysqli_fetch_assoc($result);
     return $data['count'];
+}
+
+function sortMessages($messages) {
+
 }
