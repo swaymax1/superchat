@@ -1,5 +1,7 @@
 <?php
 
+require_once("./php/utilities.php");
+
 session_start();
 if (!isset($_SESSION['loggedIn']) && !$_SESSION['loggedIn'] == true) {
   header("Location: login.php");
@@ -9,6 +11,9 @@ if (!isset($_GET['chatId']) || $_GET['chatId'] == null) {
   die("Error");
 }
 
+if (!checkChatId($_GET['chatId'], $_SESSION['username'])) {
+  header("Location: chats.php");
+}
 $_SESSION['chatId'] = $_GET['chatId'];
 
 ?>
@@ -30,7 +35,11 @@ $_SESSION['chatId'] = $_GET['chatId'];
   </div>
 
   <div id="container">
-    <div id="username-container"><p><?php echo $_GET['user2'] ?></p></div>
+    <div id="username-container">
+      <p>
+        <?php echo $_GET['user2'] ?>
+      </p>
+    </div>
     <div id="messages_container">
     </div>
     <form id="message_form" action="#" method="post" placeholder="Type message here" autocomplete="off">

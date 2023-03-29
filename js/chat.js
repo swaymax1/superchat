@@ -26,7 +26,7 @@ messageForm.addEventListener('submit', event => {
     event.preventDefault();
 
     const text = messageInput.value;
-    if (text === '') return;
+    if (text === '' || sending) return;
     const message = createMessage(text, username);
     chatElements.push(message);
     messagesContainer.appendChild(message);
@@ -45,7 +45,7 @@ function createMessage(text, sender) {
 }
 
 function uploadMessage(message) {
-    if(message === '') return;
+    if (message === '') return;
     const info = {
         'message_upload': true,
         'chatId': chatId,

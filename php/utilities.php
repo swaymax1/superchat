@@ -121,7 +121,7 @@ function getChats($server, $username)
             array_push($data, array("chatId" => $row['id'], "username" => $row['username1'], "last_message" => $last_message, "lastMessageTs" => $row['lastMessageTs'], "unseen_messages" => getUnreadMessages($server, $username, $row['id'])));
         }
     }
-    usort($data, function($a, $b) {
+    usort($data, function ($a, $b) {
         return $b['lastMessageTs'] <=> $a['lastMessageTs'];
     });
     return $data;
@@ -253,6 +253,10 @@ function getUnreadMessages($server, $username, $chatId)
     return $data['count'];
 }
 
-function sortMessages($messages) {
-
+function checkChatId($id, $username)
+{
+    global $server;
+    $query = "select * from chats where id = $id and (username1 = '$username' or username2 = '$username')";
+    $result = mysqli_query($server, $query);
+    return mysqli_num_rows($result) > 0;
 }
