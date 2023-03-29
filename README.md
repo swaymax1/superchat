@@ -1,5 +1,5 @@
 <div align="center">
-<h1>Supchat</h1>
+<h1>Superchat</h1>
 
 ### <a href="https://superchat1739.000webhostapp.com/">Follow this link to start chatting</a>
 </div>
